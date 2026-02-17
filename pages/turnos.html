@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Turnos</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script defer src="../js/turnos.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <a class="logo" href="../index.html">Mi Turno</a>
+            <ul class="navbar">
+                <li>
+                    <a class="nav-item" href="../index.html">Reservar</a>
+                </li>
+                <li>
+                    <a class="nav-item" href="">Profesionales</a>
+                </li>
+                <li>
+                    <a class="nav-item" href="">Contacto</a>
+                </li>
+                <li>
+                    <a class="nav-item" href="">Equipo</a>
+                </li>
+                <li>
+                    <a class="nav-item" href="#">Mis Turnos</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <h1>Mis Turnos</h1>
+
+            <div id="turnosContainer" class="turnos-container">
+                <!-- Se llena dinámicamente con JavaScript -->
+            </div>
+
+            <div id="mensajeVacio" class="card" style="display: none;">
+                <div class="card-body text-center">
+                    <p class="light-text">No tienes turnos reservados</p>
+                    <a href="../index.html" class="btn btn-primary" style="display: inline-block; margin-top: 15px;">Reservar un Turno</a>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

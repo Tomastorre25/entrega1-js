@@ -3,12 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Validacion de usuario</title>
+    <title>Mi Turno</title>
+    <link rel="stylesheet" href="./css/style.css">
     <script defer src="./js/main.js"></script>
 </head>
 <body>
+    <header>
+        <nav>
+            <a class="logo" href="#">Mi Turno</a>
+            <ul class="navbar">
+                <li>
+                    <a class="nav-item" href="#">Reservar</a>
+                </li>
+                <li>
+                    <a class="nav-item" href="">Profesionales</a>
+                </li>
+                <li>
+                    <a class="nav-item" href="">Contacto</a>
+                </li>
+                <li>
+                    <a class="nav-item" href="">Equipo</a>
+                </li>
+                <li>
+                    <a class="nav-item" href="./pages/turnos.html">Mis Turnos</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <h1>Reserva tu Turno</h1>
 
-    <h1>Tomas de la Torre</h1>
-    
+            <!-- Paso 1: Seleccionar Profesional -->
+            <div id="paso1" class="paso-container">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">Paso 1: Selecciona tu Profesional</h2>
+                        <div id="profesionalesContainer" class="profesionales-container">
+                            <!-- Se llena dinámicamente con JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paso 2: Seleccionar Servicio -->
+            <div id="paso2" class="paso-container" style="display: none;">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">Paso 2: Elige tu Servicio</h2>
+                        <p class="light-text">Profesional seleccionado: <span id="profesionalSeleccionado"></span></p>
+                        <div id="serviciosContainer" class="servicios-container">
+                            <!-- Se llena dinámicamente con JavaScript -->
+                        </div>
+                        <div class="buttons-group">
+                            <button class="btn btn-secondary" onclick="volverAPaso(1)">Atrás</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paso 3: Seleccionar Día y Horario -->
+            <div id="paso3" class="paso-container" style="display: none;">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">Paso 3: Elige Día y Horario</h2>
+                        <p class="light-text">Profesional: <span id="profesionalFinal"></span> | Servicio: <span id="servicioFinal"></span></p>
+                        
+                        <div class="form-section">
+                            <div>
+                                <label class="form-label">Selecciona un día:</label>
+                                <input type="date" id="dia" class="form-control" min="">
+                            </div>
+                        </div>
+
+                        <div id="horariosDisponibles"></div>
+
+                        <div class="buttons-group">
+                            <button class="btn btn-secondary" onclick="volverAPaso(2)">Atrás</button>
+                            <button class="btn btn-success" id="btnConfirmar" disabled>Confirmar Reserva</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Confirmación -->
+            <div id="paso4" class="paso-container" style="display: none;">
+                <div class="card card-success">
+                    <div class="card-body text-center">
+                        <h2 class="card-title text-success">¡Turno Reservado!</h2>
+                        <div class="alert alert-success">
+                            <p>Profesional: <span id="resumenProfesional"></span></p>
+                            <p>Servicio: <span id="resumenServicio"></span></p>
+                            <p>Fecha: <span id="resumenFecha"></span></p>
+                            <p>Horario: <span id="resumenHorario"></span></p>
+                        </div>
+                        <button class="btn btn-primary" onclick="nuevaReserva()">Hacer otra Reserva</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
