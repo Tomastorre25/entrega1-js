@@ -24,10 +24,18 @@ nav {
 }
 
 .logo {
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
+    max-width: 150px;
+    height: auto;
+    display: flex;
+    align-items: center;
     text-decoration: none;
+    line-height: 1;
+}
+
+.logo img {
+    max-width: 100%;
+    height: 50px;
+    object-fit: contain;
 }
 
 .navbar {
@@ -359,5 +367,205 @@ h5 {
 .turno-actions {
     display: flex;
     gap: 10px;
+}
+
+.ocultar {
+    display: none;
+}
+
+.btn-link-block {
+    display: inline-block;
+    margin-top: 15px;
+}
+
+.profesionales-galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.profesional-tarjeta {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.profesional-tarjeta:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.profesional-imagen {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    background-color: #e0e0e0;
+}
+
+.profesional-contenido {
+    padding: 20px;
+}
+
+.profesional-nombre {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+.profesional-descripcion {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.profesional-seccion {
+    margin-bottom: 15px;
+}
+
+.profesional-seccion-titulo {
+    font-size: 12px;
+    font-weight: bold;
+    color: #007bff;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.profesional-especializacion {
+    font-size: 14px;
+    color: #555;
+}
+
+.profesional-horarios {
+    font-size: 14px;
+    color: #555;
+    display: grid;
+    gap: 5px;
+}
+
+.horario-item-prof {
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    border-left: 3px solid #007bff;
+}
+
+.contacto-seccion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+.contacto-titulo {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.contacto-subtitulo {
+    text-align: center;
+    font-size: 16px;
+    color: #ccc;
+    margin-bottom: 40px;
+    max-width: 600px;
+}
+
+.contacto-iconos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    width: 100%;
+    max-width: 800px;
+}
+
+.contacto-item {
+    /* background: lightgray; */
+    border-radius: 12px;
+    padding: 40px 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.contacto-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.contacto-icono {
+    max-width: 60px;
+    line-height: 1;
+}
+
+.contacto-nombre {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.contacto-link {
+    font-size: 13px;
+    color: #666;
+    word-break: break-all;
+    margin-top: 8px;
+}
+
+.contacto-item.instagram {
+    background-color: #afafaf;
+    border-top: 4px solid #667eea;
+}
+
+.contacto-item.instagram:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.contacto-item.instagram:hover .contacto-nombre,
+.contacto-item.instagram:hover .contacto-link {
+    color: white;
+}
+
+.contacto-item.whatsapp {
+    background-color: #afafaf;
+    border-top: 4px solid #25D366;
+}
+
+.contacto-item.whatsapp:hover {
+    background: linear-gradient(135deg, #25D366 0%, #33503e 100%);
+    color: white;
+}
+
+.contacto-item.whatsapp:hover .contacto-nombre,
+.contacto-item.whatsapp:hover .contacto-link {
+    color: white;
+}
+
+.contacto-item.email {
+    background-color: #afafaf;
+    border-top: 4px solid #EA4335;
+}
+
+.contacto-item.email:hover {
+    background: linear-gradient(135deg, #EA4335 0%, #5a3330 100%);
+    color: white;
+}
+
+.contacto-item.email:hover .contacto-nombre,
+.contacto-item.email:hover .contacto-link {
+    color: white;
 }
 

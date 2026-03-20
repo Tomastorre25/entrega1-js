@@ -10,40 +10,44 @@ function mostrarTurnos() {
     container.innerHTML = ""
 
     if (turnos.length === 0) {
-        container.style.display = 'none'
-        mensajeVacio.style.display = 'block'
+        container.classList.add('ocultar')
+        mensajeVacio.classList.remove('ocultar')
         return
     }
 
-    mensajeVacio.style.display = 'none'
-    container.style.display = 'block'
+    mensajeVacio.classList.add('ocultar')
+    container.classList.remove('ocultar')
 
     turnos.forEach((turno, index) => {
         const tarjeta = document.createElement('div')
         tarjeta.className = 'turno-card'
-        tarjeta.innerHTML = `
-            <div class="turno-info">
-                <div class="turno-field">
-                    <span class="turno-label">Profesional:</span>
-                    <span class="turno-value">${turno.profesional}</span>
-                </div>
-                <div class="turno-field">
-                    <span class="turno-label">Servicio:</span>
-                    <span class="turno-value">${turno.servicio}</span>
-                </div>
-                <div class="turno-field">
-                    <span class="turno-label">Fecha:</span>
-                    <span class="turno-value">${turno.fechaFormato}</span>
-                </div>
-                <div class="turno-field">
-                    <span class="turno-label">Horario:</span>
-                    <span class="turno-value">${turno.horario}</span>
-                </div>
-            </div>
-            <div class="turno-actions">
-                <button class="btn btn-secondary" onclick="eliminarTurno(${index})">Eliminar</button>
-            </div>
-        `
+        const info = document.createElement('div')
+        info.className = 'turno-info'
+
+        const campos = [
+            ['Profesional', turno.profesional],
+            ['Servicio', turno.servicio],
+            ['Fecha', turno.fechaFormato],
+            ['Horario', turno.horario]
+        ]
+
+        campos.forEach(([label, value]) => {
+            const field = document.createElement('div')
+            field.className = 'turno-field'
+            field.innerHTML = `<span class="turno-label">${label}:</span> <span class="turno-value">${value}</span>`
+            info.appendChild(field)
+        })
+
+        const actions = document.createElement('div')
+        actions.className = 'turno-actions'
+        const btn = document.createElement('button')
+        btn.className = 'btn btn-secondary'
+        btn.textContent = 'Eliminar'
+        btn.addEventListener('click', () => eliminarTurno(index))
+        actions.appendChild(btn)
+
+        tarjeta.appendChild(info)
+        tarjeta.appendChild(actions)
         container.appendChild(tarjeta)
     })
 }

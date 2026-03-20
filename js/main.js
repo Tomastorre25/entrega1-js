@@ -12,12 +12,12 @@ const barberia = {
             { id: 3, nombre: "Barba", precio: "$15.000", duracion: "30 min" }
         ],
         2: [
-             { id: 4, nombre: "Corte", precio: "$15.000", duracion: "30 min" },
+            { id: 4, nombre: "Corte", precio: "$15.000", duracion: "30 min" },
             { id: 5, nombre: "Corte y Barba", precio: "$19.000", duracion: "60 min" },
             { id: 6, nombre: "Barba", precio: "$15.000", duracion: "30 min" }
         ],
         3: [
-             { id: 7, nombre: "Corte", precio: "$15.000", duracion: "30 min" },
+            { id: 7, nombre: "Corte", precio: "$15.000", duracion: "30 min" },
             { id: 8, nombre: "Corte y Barba", precio: "$19.000", duracion: "60 min" },
             { id: 9, nombre: "Barba", precio: "$15.000", duracion: "30 min" }
         ]
@@ -37,6 +37,7 @@ mostrarProfesionales()
 configurarFecha()
 configurarHorario()
 configurarBotonConfirmar()
+configurarEventosGenerales()
 
 // Mostrar profesionales
 function mostrarProfesionales() {
@@ -46,9 +47,11 @@ function mostrarProfesionales() {
     barberia.profesionales.forEach(prof => {
         const contenedor = document.createElement('div')
         contenedor.className = 'profesional-item'
-        contenedor.innerHTML = `
-            <div class="profesional-card" onclick="seleccionarProfesional(${prof.id}, '${prof.nombre}')">
-                <h5>${prof.nombre}</h5>`
+        const card = document.createElement('div')
+        card.className = 'profesional-card'
+        card.innerHTML = `<h5>${prof.nombre}</h5>`
+        card.addEventListener('click', () => seleccionarProfesional(prof.id, prof.nombre))
+        contenedor.appendChild(card)
         container.appendChild(contenedor)
     })
 }
@@ -70,12 +73,14 @@ function mostrarServicios(profesionalId) {
     servicios.forEach(servicio => {
         const contenedor = document.createElement('div')
         contenedor.className = 'servicio-item'
-        contenedor.innerHTML = `
-            <div class="servicio-card" onclick="seleccionarServicio(${servicio.id}, '${servicio.nombre}')">
+        const card = document.createElement('div')
+        card.className = 'servicio-card'
+        card.innerHTML = `
                 <div class="servicio-nombre">${servicio.nombre}</div>
                 <p class="servicio-precio">Precio: ${servicio.precio}</p>
-                <p class="servicio-duracion">Duración: ${servicio.duracion}</p>
-            </div>`
+                <p class="servicio-duracion">Duración: ${servicio.duracion}</p>`
+        card.addEventListener('click', () => seleccionarServicio(servicio.id, servicio.nombre))
+        contenedor.appendChild(card)
         container.appendChild(contenedor)
     })
 }
@@ -112,20 +117,29 @@ function mostrarHorarios(fecha) {
     
     const botonesContainer = document.getElementById('horariosBotones')
     
+    // Obtener turnos ya reservados para este profesional en esta fecha
+    const turnos = JSON.parse(localStorage.getItem('turnos')) || []
+    const horariosReservados = turnos
+        .filter(turno => turno.profesional === reservaActual.profesional.nombre && turno.fecha === fecha)
+        .map(turno => turno.horario)
+    
     barberia.horarios.forEach(horario => {
-        const contenedor = document.createElement('div')
-        contenedor.className = 'horario-item'
-        contenedor.innerHTML = `
-            <button class="horario-btn" onclick="seleccionarHorario('${fecha}', '${horario}')">
-                ${horario}
-            </button>
-        `
-        botonesContainer.appendChild(contenedor)
+        // Solo mostrar si no está reservado
+        if (!horariosReservados.includes(horario)) {
+            const contenedor = document.createElement('div')
+            contenedor.className = 'horario-item'
+            const btn = document.createElement('button')
+            btn.className = 'horario-btn'
+            btn.textContent = horario
+            btn.addEventListener('click', () => seleccionarHorario(fecha, horario, btn))
+            contenedor.appendChild(btn)
+            botonesContainer.appendChild(contenedor)
+        }
     })
 }
 
 // Seleccionar horario
-function seleccionarHorario(fecha, horario) {
+function seleccionarHorario(fecha, horario, boton) {
     reservaActual.fecha = fecha
     reservaActual.horario = horario
     
@@ -134,7 +148,9 @@ function seleccionarHorario(fecha, horario) {
         btn.classList.remove('selected')
     })
     
-    event.target.classList.add('selected')
+    if (boton) {
+        boton.classList.add('selected')
+    }
     
     // Habilitar botón de confirmar
     document.getElementById('btnConfirmar').disabled = false
@@ -143,11 +159,11 @@ function seleccionarHorario(fecha, horario) {
 // Mostrar paso específico
 function mostrarPaso(numero) {
     document.querySelectorAll('.paso-container').forEach(paso => {
-        paso.style.display = 'none'
+        paso.classList.add('ocultar')
     })
     
     // Mostrar paso solicitado
-    document.getElementById(`paso${numero}`).style.display = 'block'
+    document.getElementById(`paso${numero}`).classList.remove('ocultar')
     
     // Si es paso 2, mostrar servicios
     if (numero === 2) {
@@ -170,7 +186,7 @@ function configurarBotonConfirmar() {
 
 // Confirmar reserva
 function confirmarReserva() {
-    const [año, mes, dia] = reservaActual.fecha.split('-')
+    // formatear fecha para la vista
     const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
     const fechaFormato = new Date(reservaActual.fecha + 'T00:00:00').toLocaleDateString('es-ES', opciones)
     
@@ -209,4 +225,14 @@ function nuevaReserva() {
     document.getElementById('btnConfirmar').disabled = true
     
     mostrarPaso(1)
+}
+
+// Eventos de botones estáticos que antes vivían en el HTML
+function configurarEventosGenerales() {
+    const volver1 = document.getElementById('btnVolver1')
+    if (volver1) volver1.addEventListener('click', () => volverAPaso(1))
+    const volver2 = document.getElementById('btnVolver2')
+    if (volver2) volver2.addEventListener('click', () => volverAPaso(2))
+    const nueva = document.getElementById('btnNuevaReserva')
+    if (nueva) nueva.addEventListener('click', nuevaReserva)
 }
